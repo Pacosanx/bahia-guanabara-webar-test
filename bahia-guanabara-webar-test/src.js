@@ -1,7 +1,7 @@
 import { bootstrapCameraKit, createMediaStreamSource } from '@snap/camera-kit';
 
-const lensId = '63d44204-1fa1-41df-bcfc-816bef0f1d31';
-const cameraKitConfig = { apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzk0Njc2MzE3LCJzdWIiOiJlMGY1ZTI0OS1iNTJhLTQyZmYtYWVmNy03YjE1MDcxY2I0Zjh-U1RBR0lOR35iOTUzNjUyNy0yYzQwLTQwMTUtOTQ5YS00MTVmMmI1NDU1ZmUifQ.8rbLADWnod5gA9Gs3HlNpTDZBou3WZLqPGnwXVVXHI4', lensGroupId: '79c8ec9f-6166-4abd-861f-651aa8d9fc43' };
+const lensId = 'bc5169aa-58ab-4cd9-9d36-61bba71ea464';
+const cameraKitConfig = { apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzk1NzMyNDMwLCJzdWIiOiI0MDRjMjU0YS1mMTMyLTQ1N2ItYTU4Yi0xMzdiYTU2OTQyMDZ-U1RBR0lOR34xNmI1NzU3OC00OTljLTQ2YjUtYTBhNi1lM2UzNTQ5MTg0NGQifQ.p5S-91V-Suk6fiaI3f554vKhuhfpW6pP-lh5zEMSqB4', lensGroupId: '1122eb86-99b0-4a66-acd5-23a528688f70' };
 // Nitidez del Lens. Si no se le indica otra cosa, Camera Kit dibuja el Lens al tamaño del video de la cámara, y sin
 // una resolución pedida el teléfono entrega video chico (unos 640 x 480). La página lo estiraba a pantalla completa
 // (casi 3 veces en un iPhone), por eso el modelo se veía pixelado, sobre todo de lejos.

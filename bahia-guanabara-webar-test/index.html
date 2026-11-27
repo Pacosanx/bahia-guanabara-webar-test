@@ -1,4 +1,58 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Baía de Guanabara · Realidade aumentada</title><link rel="stylesheet" href="./style.css"></head>
-<body><main><h1>Baía de Guanabara</h1><p>Experiência de realidade aumentada</p><form id="config"><button>Abrir câmera</button></form><div class="camera-view"><canvas id="camera"></canvas><button id="stop" type="button" aria-label="Fechar câmera">✕</button></div><p id="status" role="status">Toque em Abrir câmera para começar.</p><details><summary>Detalhes técnicos</summary><pre id="log"></pre><button type="button" id="copy">Copiar diagnóstico</button></details></main><script type="module" src="./src.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Baía de Guanabara · Realidade aumentada</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body data-screen="start">
+<main>
+  <!-- Início -->
+  <section class="screen screen-start" aria-labelledby="titulo">
+    <header>
+      <h1 id="titulo">Baía de Guanabara</h1>
+      <p class="subtitle">Experiência de realidade aumentada</p>
+    </header>
+    <button type="button" id="start" class="btn">Abrir a câmera</button>
+    <img class="logo" src="./img/logo-crea-rj.jpg" width="214" height="129" alt="CREA-RJ · Conselho Regional de Engenharia e Agronomia do Rio de Janeiro">
+  </section>
 
+  <!-- Carregando -->
+  <section class="screen screen-loading" aria-live="polite">
+    <div class="loader">
+      <img class="spinner" src="./img/engrenagem.svg" width="120" height="120" alt="">
+      <p class="loader-title">Carregando experiência…</p>
+      <div class="progress" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill"></div></div>
+      <p class="hint">Aponte a câmera para a página da revista</p>
+    </div>
+  </section>
+
+  <!-- Erro -->
+  <section class="screen screen-error" role="alert">
+    <div class="error-message">
+      <div class="error-icon" aria-hidden="true">
+        <img src="./img/engrenagem.svg" width="120" height="120" alt="">
+        <span class="mark"></span>
+        <img class="dot" src="./img/ponto.svg" width="11" height="11" alt="">
+      </div>
+      <p class="error-title">Algo deu errado</p>
+      <p class="error-text">Não foi possível carregar a experiência. Verifique sua conexão e permita o acesso à câmera.</p>
+    </div>
+    <button type="button" id="retry" class="btn btn-wide">Tentar novamente</button>
+  </section>
+
+  <!-- Câmera -->
+  <div class="camera-view">
+    <canvas id="camera"></canvas>
+    <button id="stop" type="button" aria-label="Fechar câmera">✕</button>
+    <p id="status" role="status"></p>
+  </div>
+
+  <!-- Diagnóstico: só aparece com ?debug no endereço -->
+  <details id="debug" hidden><summary>Detalhes técnicos</summary><pre id="log"></pre><button type="button" id="copy">Copiar diagnóstico</button></details>
+</main>
+<script type="module" src="./src.js"></script>
+</body>
+</html>

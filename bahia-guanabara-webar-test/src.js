@@ -1,7 +1,7 @@
 import { bootstrapCameraKit, createMediaStreamSource } from '@snap/camera-kit';
 
 const lensId = 'bc5169aa-58ab-4cd9-9d36-61bba71ea464';
-const cameraKitConfig = { apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzk1NzMyNDMwLCJzdWIiOiI0MDRjMjU0YS1mMTMyLTQ1N2ItYTU4Yi0xMzdiYTU2OTQyMDZ-U1RBR0lOR34xNmI1NzU3OC00OTljLTQ2YjUtYTBhNi1lM2UzNTQ5MTg0NGQifQ.p5S-91V-Suk6fiaI3f554vKhuhfpW6pP-lh5zEMSqB4', lensGroupId: '1122eb86-99b0-4a66-acd5-23a528688f70' };
+const cameraKitConfig = { apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzk1NzgyODkzLCJzdWIiOiJhMTQ5NjkwMy1jYzM2LTQ2MDUtYmY0Mi0yNjc3ZDMxMjcwOWR-U1RBR0lOR34xMjljZjRkMi0xZjgxLTQ5ZWYtOWNmYS1iNWRhMDc3YTAwMzMifQ.WJqo62tRXdLkKIgwpvCOzi6n3kfZQuzIyefmzmfqj88', lensGroupId: '1122eb86-99b0-4a66-acd5-23a528688f70' };
 // Nitidez del Lens. Si no se le indica otra cosa, Camera Kit dibuja el Lens al tamaño del video de la cámara, y sin
 // una resolución pedida el teléfono entrega video chico (unos 640 x 480). La página lo estiraba a pantalla completa
 // (casi 3 veces en un iPhone), por eso el modelo se veía pixelado, sobre todo de lejos.
@@ -23,7 +23,7 @@ stop.addEventListener('click', () => {
   stream = null;
   source = null;
   document.body.classList.remove('active');
-  report('Tocá Iniciar prueba para comenzar.');
+  report('Toque em Abrir câmera para começar.');
 });
 function report(message, error) {
   status.textContent = message;
@@ -48,9 +48,9 @@ async function updateRenderSize() {
   try {
     await source.setRenderSize(width, height);
     lastSize = size;
-    note(`Resolución del Lens: ${size}`);
+    note(`Resolução da Lens: ${size}`);
   } catch (error) {
-    note(`No se pudo cambiar la resolución del Lens: ${error.message || error}`);
+    note(`Não foi possível mudar a resolução da Lens: ${error.message || error}`);
   }
 }
 // Al girar el teléfono o cambiar el tamaño de la ventana, se vuelve a ajustar la resolución.
@@ -61,23 +61,23 @@ window.addEventListener('resize', () => {
 form.addEventListener('submit', async event => {
   event.preventDefault();
   if (!cameraKitConfig.apiToken || !cameraKitConfig.lensGroupId) {
-    report('La prueba todavía no está disponible: falta conectar el Lens en Snap.');
+    report('A experiência ainda não está disponível.');
     return;
   }
   form.querySelector('button').disabled = true;
   document.body.classList.add('active');
   if (stream) stream.getTracks().forEach(track => track.stop());
   try {
-    report('Iniciando Camera Kit…');
+    report('Iniciando…');
     const cameraKit = await bootstrapCameraKit({ apiToken: cameraKitConfig.apiToken });
     const session = await cameraKit.createSession({ liveRenderTarget: document.querySelector('#camera') });
-    session.events.addEventListener('error', ({detail}) => report('Error durante la ejecución del Lens.', detail.error));
-    report('Solicitando la cámara…');
+    session.events.addEventListener('error', ({detail}) => report('Ocorreu um erro durante a experiência.', detail.error));
+    report('Solicitando acesso à câmera…');
     stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment', ...CAMERA_SIZE},audio:false});
     source = createMediaStreamSource(stream, {cameraType:'environment'});
     lastSize = '';
     await session.setSource(source);
-    report('Cargando el Lens…');
+    report('Carregando a experiência…');
     const lens = await cameraKit.lensRepository.loadLens(lensId, cameraKitConfig.lensGroupId);
     await session.applyLens(lens);
     await session.play();
@@ -85,17 +85,17 @@ form.addEventListener('submit', async event => {
     await new Promise(resolve => setTimeout(resolve, 150));
     const track = stream.getVideoTracks()[0];
     const settings = track && track.getSettings ? track.getSettings() : {};
-    note(`Cámara: ${settings.width} x ${settings.height}`);
+    note(`Câmera: ${settings.width} x ${settings.height}`);
     await updateRenderSize();
-    report('Lens iniciado. Apuntá a la imagen de la revista.');
+    report('Aponte para a imagem da revista.');
   } catch (error) {
     if (stream) stream.getTracks().forEach(track => track.stop());
     stream = null;
     source = null;
     document.body.classList.remove('active');
-    report('No se pudo iniciar la prueba. Abrí los detalles técnicos.', error);
+    report('Não foi possível abrir a experiência. Tente novamente.', error);
   }
   finally { form.querySelector('button').disabled = false; }
 });
-document.querySelector('#copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText(log.textContent); status.textContent = 'Diagnóstico copiado.'; } catch { status.textContent = 'No se pudo copiar; seleccioná el texto del diagnóstico.'; } });
+document.querySelector('#copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText(log.textContent); status.textContent = 'Diagnóstico copiado.'; } catch { status.textContent = 'Não foi possível copiar. Selecione o texto do diagnóstico.'; } });
 
